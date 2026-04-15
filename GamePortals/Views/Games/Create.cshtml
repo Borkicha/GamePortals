@@ -1,42 +1,89 @@
 ﻿@model Game
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавяне на игра";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
+    <h1 class="text-primary fw-bold"><i class="bi bi-plus-square-fill"></i> Добави нова игра</h1>
+    <p class="text-muted">Попълни полетата по-долу, за да впишеш ново заглавие в каталога.</p>
+    <hr />
 
-<h4>Game</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-lg-5">
+            <form asp-action="Create" method="post" class="shadow p-4 bg-white rounded border border-primary-subtle">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="control-label fw-bold">Заглавие</label>
+                    <input asp-for="Title" class="form-control form-control-lg" placeholder="Напр. The Witcher 3..." />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label fw-bold">Описание</label>
+                    <textarea asp-for="Description" class="form-control" rows="4" placeholder="Напиши кратко резюме на играта..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="GenreId" class="control-label fw-bold">Категория</label>
+                    <select asp-for="GenreId" class="form-select" asp-items="ViewBag.GenreId">
+                        <option value="" disabled selected>-- Избери категория --</option>
+                    </select>
+                    <span asp-validation-for="GenreId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Price" class="control-label fw-bold">Цена</label>
+                    <div class="input-group">
+                        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                        <span class="input-group-text bg-success text-white fw-bold">€</span>
+                    </div>
+                    <span asp-validation-for="Price" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ImageUrl" class="control-label fw-bold">Обложка (Линк)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input asp-for="ImageUrl" class="form-control" placeholder="Постави URL към картинка..." />
+                    </div>
+                    <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm fw-bold">
+                        <i class="bi bi-cloud-arrow-up-fill"></i> Добави в базата данни
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-4 ms-lg-5 d-none d-md-block">
+            <div class="card bg-light border-0 shadow-sm mt-2">
+                <div class="card-body">
+                    <h5 class="card-title text-primary fw-bold"><i class="bi bi-lightbulb"></i> Полезен съвет</h5>
+                    <p class="card-text small text-secondary">
+                        За най-добър изглед на каталога, използвай картинки с пропорции **2:3** (вертикални).
+                    </p>
+                    <p class="card-text small text-secondary">
+                        Можеш да копираш адреса на картинката директно от Google Images.
+                    </p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GenreId" class="control-label"></label>
-                <select asp-for="GenreId" class ="form-control" asp-items="ViewBag.GenreId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Назад към каталога
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

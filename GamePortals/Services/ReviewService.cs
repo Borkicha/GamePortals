@@ -15,12 +15,18 @@ namespace GamePortals.Services
 
         public async Task<IEnumerable<Review>> GetAllReviewsAsync()
         {
-            return await _context.Reviews.Include(r => r.Game).ToListAsync();
+            return await _context.Reviews
+                .Include(r => r.Game)
+                .Include(r => r.User)
+                .ToListAsync();
         }
 
         public async Task<Review> GetReviewByIdAsync(int id)
         {
-            return await _context.Reviews.Include(r => r.Game).FirstOrDefaultAsync(r => r.Id == id);
+            return await _context.Reviews
+                .Include(r => r.Game)
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task AddReviewAsync(Review review)

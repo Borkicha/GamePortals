@@ -1,49 +1,113 @@
-﻿@model Review
+﻿@model GamePortals.Models.Review
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Редактиране на ревю";
 }
 
-<h1>Edit</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 shadow-lg p-4 bg-white rounded border">
+            <h2 class="mb-3 text-warning">
+                <i class="bi bi-pencil-square"></i> Редактирай ревюто си
+            </h2>
 
-<h4>Review</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Content" class="control-label"></label>
-                <input asp-for="Content" class="form-control" />
-                <span asp-validation-for="Content" class="text-danger"></span>
+            <div class="alert alert-secondary border-0 shadow-sm">
+                <strong>Игра:</strong> @(ViewBag.GameTitle ?? "Зареждане...")
             </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GameId" class="control-label"></label>
-                <select asp-for="GameId" class="form-control" asp-items="ViewBag.GameId"></select>
-                <span asp-validation-for="GameId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <hr />
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="GameId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="form-group mb-4 text-center">
+                    <label class="control-label fw-bold d-block mb-2">Твоята оценка</label>
+
+
+                    <input type="hidden" asp-for="Rating" id="ratingValue" />
+                    <div class="star-rating display-5">
+                        <i class="bi bi-star star-icon text-muted" data-value="1" style="cursor: pointer;"></i>
+                        <i class="bi bi-star star-icon text-muted" data-value="2" style="cursor: pointer;"></i>
+                        <i class="bi bi-star star-icon text-muted" data-value="3" style="cursor: pointer;"></i>
+                        <i class="bi bi-star star-icon text-muted" data-value="4" style="cursor: pointer;"></i>
+                        <i class="bi bi-star star-icon text-muted" data-value="5" style="cursor: pointer;"></i>
+                    </div>
+                    <span asp-validation-for="Rating" class="text-danger small d-block mt-1"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Content" class="control-label fw-bold">Твоят коментар</label>
+                    <textarea asp-for="Content" class="form-control" rows="5" placeholder="Напишете мнението си тук..."></textarea>
+                    <span asp-validation-for="Content" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end border-top pt-3">
+                    <a asp-controller="Games" asp-action="Details" asp-route-id="@Model.GameId" class="btn btn-outline-secondary px-4">Отказ</a>
+                    <button type="submit" class="btn btn-warning px-4 fw-bold text-dark shadow-sm">Запази промените</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<style>
+    .star-icon.active {
+        color: #ffc107 !important;
+    }
+
+    .star-icon {
+        transition: transform 0.1s ease;
+    }
+
+        .star-icon:hover {
+            transform: scale(1.2);
+        }
+</style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('.star-icon');
+            const ratingInput = document.getElementById('ratingValue');
+
+            updateStars(ratingInput.value);
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const val = this.getAttribute('data-value');
+                    ratingInput.value = val;
+                    updateStars(val);
+                });
+
+                star.addEventListener('mouseover', function () {
+                    const val = this.getAttribute('data-value');
+                    updateStars(val);
+                });
+
+                star.addEventListener('mouseout', function () {
+                    updateStars(ratingInput.value);
+                });
+            });
+
+            function updateStars(value) {
+                stars.forEach(star => {
+                    const starValue = star.getAttribute('data-value');
+                    if (starValue <= value) {
+                        star.classList.remove('bi-star', 'text-muted');
+                        star.classList.add('bi-star-fill', 'active');
+                    } else {
+                        star.classList.remove('bi-star-fill', 'active');
+                        star.classList.add('bi-star', 'text-muted');
+                    }
+                });
+            }
+        });
+    </script>
 }

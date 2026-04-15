@@ -8,6 +8,7 @@ using GamePortals.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GamePortals.Controllers
 {
@@ -22,20 +23,47 @@ namespace GamePortals.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId)
         {
-            var games = await _gameService.GetAllGamesAsync();
+            var gamesQuery = _context.Games.Include(g => g.Genre).AsQueryable();
+
+            if (categoryId.HasValue)
+            {
+                gamesQuery = gamesQuery.Where(g => g.GenreId == categoryId.Value);
+
+                var category = await _context.Genres.FindAsync(categoryId.Value);
+                ViewData["CurrentCategory"] = category?.Name;
+            }
+
+            var games = await gamesQuery.ToListAsync();
             return View(games);
         }
 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
-            var game = await _gameService.GetGameByIdAsync(id.Value);
+
+            var game = await _context.Games
+                .Include(g => g.Genre)
+                .Include(g => g.Reviews)
+                    .ThenInclude(r => r.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (game == null) return NotFound();
+
+            if (game.Reviews != null && game.Reviews.Any())
+            {
+                ViewBag.AverageRating = game.Reviews.Average(r => r.Rating).ToString("0.0");
+            }
+            else
+            {
+                ViewBag.AverageRating = "Няма оценки";
+            }
+
             return View(game);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
@@ -43,8 +71,9 @@ namespace GamePortals.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,GenreId")] Game game)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,GenreId,ImageUrl,Price")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +84,7 @@ namespace GamePortals.Controllers
             return View(game);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -65,8 +95,9 @@ namespace GamePortals.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,GenreId")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,GenreId,ImageUrl,Price")] Game game)
         {
             if (id != game.Id) return NotFound();
             if (ModelState.IsValid)
@@ -87,6 +118,7 @@ namespace GamePortals.Controllers
             return View(game);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -96,6 +128,7 @@ namespace GamePortals.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

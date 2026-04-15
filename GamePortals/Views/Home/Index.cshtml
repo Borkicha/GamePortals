@@ -1,8 +1,59 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="p-5 mb-4 bg-dark rounded-3 shadow-lg position-relative overflow-hidden" style="min-height: 400px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;">
+    <div class="container-fluid py-5 text-white position-relative" style="z-index: 2;">
+        <h1 class="display-3 fw-bold text-uppercase">Добре дошли в <span class="text-primary">GamePortals</span></h1>
+        <p class="col-md-8 fs-4">Твоето място за най-добрите игри, честни ревюта и гейминг общност. Открий следващото си приключение тук.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+            <a asp-controller="Games" asp-action="Index" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold text-uppercase">
+                <i class="bi bi-controller"></i> Разгледай игрите
+            </a>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-light btn-lg px-4 fw-bold text-uppercase">
+                    Присъедини се
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    <div class="feature col text-center p-3">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-primary fs-1 mb-3">
+            <i class="bi bi-star-fill"></i>
+        </div>
+        <h3 class="fs-2 fw-bold">Топ Ревюта</h3>
+        <p class="text-secondary">Прочети какво мислят другите играчи, преди да купиш следващата си игра.</p>
+    </div>
+    <div class="feature col text-center p-3">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-primary fs-1 mb-3">
+            <i class="bi bi-tags-fill"></i>
+        </div>
+        <h3 class="fs-2 fw-bold">Множество Жанрове</h3>
+        <p class="text-secondary">От епични RPG-та до интензивни шутъри – имаме всичко подредено по категории.</p>
+    </div>
+    <div class="feature col text-center p-3">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-primary fs-1 mb-3">
+            <i class="bi bi-shield-check"></i>
+        </div>
+        <h3 class="fs-2 fw-bold">Сигурност</h3>
+        <p class="text-secondary">Проверени заглавия и сигурна платформа за теб и твоите приятели.</p>
+    </div>
+</div>
+
+<div class="bg-primary text-white rounded-3 p-4 p-md-5 mt-5 shadow border-0 text-center">
+    <h2 class="fw-bold">Искаш да споделиш мнение?</h2>
+    <p class="lead mb-4">Регистрирай се и напиши първото си ревю още днес. Твоят глас е важен за общността!</p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-dark btn-lg px-5 fw-bold">ВХОД</a>
+    }
+    else
+    {
+        <a asp-controller="Games" asp-action="Index" class="btn btn-dark btn-lg px-5 fw-bold">КЪМ КАТАЛОГА</a>
+    }
 </div>

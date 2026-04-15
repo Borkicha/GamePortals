@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GamePortals.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using GamePortals.Data;
 
 namespace GamePortals.Controllers
 {
@@ -17,13 +20,13 @@ namespace GamePortals.Controllers
             _context = context;
         }
 
-        // GET: Genres
+        // GET: Genres - Достъпно за всички
         public async Task<IActionResult> Index()
         {
             return View(await _context.Genres.ToListAsync());
         }
 
-        // GET: Genres/Details/5
+        // GET: Genres/Details/5 - Достъпно за всички
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,16 +44,16 @@ namespace GamePortals.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Create
+        // GET: Genres/Create - Само за Admin
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Genres/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Genres/Create - Само за Admin
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Genre genre)
         {
@@ -63,7 +66,8 @@ namespace GamePortals.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Edit/5
+        // GET: Genres/Edit/5 - Само за Admin
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,10 +83,9 @@ namespace GamePortals.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Genres/Edit/5 - Само за Admin
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Genre genre)
         {
@@ -114,7 +117,8 @@ namespace GamePortals.Controllers
             return View(genre);
         }
 
-        // GET: Genres/Delete/5
+        // GET: Genres/Delete/5 - Само за Admin
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,8 +136,9 @@ namespace GamePortals.Controllers
             return View(genre);
         }
 
-        // POST: Genres/Delete/5
+        // POST: Genres/Delete/5 - Само за Admin
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
