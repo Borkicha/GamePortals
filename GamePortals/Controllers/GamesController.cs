@@ -23,16 +23,22 @@ namespace GamePortals.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(int? categoryId, string searchString)
         {
             var gamesQuery = _context.Games.Include(g => g.Genre).AsQueryable();
 
             if (categoryId.HasValue)
             {
                 gamesQuery = gamesQuery.Where(g => g.GenreId == categoryId.Value);
-
                 var category = await _context.Genres.FindAsync(categoryId.Value);
                 ViewData["CurrentCategory"] = category?.Name;
+                ViewData["CurrentCategoryId"] = categoryId;
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                gamesQuery = gamesQuery.Where(g => g.Title.Contains(searchString));
+                ViewData["CurrentFilter"] = searchString;
             }
 
             var games = await gamesQuery.ToListAsync();
