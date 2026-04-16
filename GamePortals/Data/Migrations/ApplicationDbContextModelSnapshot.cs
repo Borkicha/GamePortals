@@ -51,6 +51,233 @@ namespace GamePortals.Data.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Games");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Впуснете се в епично приключение из Междуземията, за да разкриете тайните на Елденския пръстен.",
+                            GenreId = 2,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aajm8s7kr9ovSbaS7vS88Lp5.png",
+                            Price = 59.99m,
+                            Title = "Elden Ring"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Гералт от Ривия търси детето от пророчеството в свят, разкъсван от война и чудовища.",
+                            GenreId = 2,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202211/0711/kh4MUIu7DAt9zUzA99Ej848W.png",
+                            Price = 29.99m,
+                            Title = "The Witcher 3"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Епична история за бандити и оцеляване в суровата сърцевина на Америка в края на Дивия запад.",
+                            GenreId = 3,
+                            ImageUrl = "https://image.api.playstation.com/cdn/UP1004/CUSA03041_00/Hpl5SuOEGREvMraG9D9v6IP8whNxBba9.png",
+                            Price = 39.99m,
+                            Title = "Red Dead Redemption 2"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Кратос и Атреус се впускат в митично пътешествие през деветте свята на скандинавската митология.",
+                            GenreId = 1,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4E9iU7iH9uT163u6R6p4v87C.png",
+                            Price = 69.99m,
+                            Title = "God of War Ragnarök"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Самураят Джин Сакай трябва да изостави традициите, за да защити остров Цушима.",
+                            GenreId = 3,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202106/2322/7YmZ96m7Xz9Bv8pW25v15B1Y.png",
+                            Price = 49.99m,
+                            Title = "Ghost of Tsushima"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Найт Сити е мегаполис, обсебен от власт и модификации на тялото.",
+                            GenreId = 1,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/it0mYv9pS90mYv9pS9.png",
+                            Price = 44.99m,
+                            Title = "Cyberpunk 2077"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Първата нова вселена на Bethesda от 25 години насам. Изследвайте космоса.",
+                            GenreId = 2,
+                            ImageUrl = "https://gaming-cdn.com/images/products/2675/orig/starfield-pc-xbox-series-x-s-game-steam-cover.jpg",
+                            Price = 69.99m,
+                            Title = "Starfield"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Станете ученик в Хогуортс през 1800-те години. Научете магии и се борете срещу тъмни сили.",
+                            GenreId = 2,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/ca6v98ghuU5UAs5Zt46SjZ85.png",
+                            Price = 59.99m,
+                            Title = "Hogwarts Legacy"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Парти базирано RPG в света на Dungeons & Dragons.",
+                            GenreId = 2,
+                            ImageUrl = "https://gaming-cdn.com/images/products/6591/orig/baldur-s-gate-3-pc-mac-game-steam-cover.jpg",
+                            Price = 59.99m,
+                            Title = "Baldur's Gate 3"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Присъединете се към Алой в забранените територии на едно постапокалиптично бъдеще.",
+                            GenreId = 3,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202109/2821/S4Yp7CD7Yp777J9I56Z7mP7O.png",
+                            Price = 49.99m,
+                            Title = "Horizon Forbidden West"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "Интензивна военна кампания и емблематичен мултиплейър.",
+                            GenreId = 9,
+                            ImageUrl = "https://gaming-cdn.com/images/products/14605/orig/call-of-duty-modern-warfare-iii-pc-game-battle-net-cover.jpg",
+                            Price = 69.99m,
+                            Title = "Call of Duty: MW III"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Мащабни битки със 128 играчи в едно несигурно бъдеще.",
+                            GenreId = 9,
+                            ImageUrl = "https://gaming-cdn.com/images/products/8821/orig/battlefield-2042-pc-game-origin-cover.jpg",
+                            Price = 19.99m,
+                            Title = "Battlefield 2042"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Армиите на ада са превзели Земята. Станете Slayer и ги спрете.",
+                            GenreId = 9,
+                            ImageUrl = "https://gaming-cdn.com/images/products/2665/orig/doom-eternal-pc-game-steam-cover.jpg",
+                            Price = 14.99m,
+                            Title = "Doom Eternal"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "Най-великият футболен симулатор с лицензирани първенства и играчи.",
+                            GenreId = 8,
+                            ImageUrl = "https://cdn1.epicgames.com/offer/f5397f28734e45c7921356f966144e59/EGS_EASPORTSFC24StandardEdition_EACanada_S2_1200x1600-986f3333333333333333333333333333",
+                            Price = 59.99m,
+                            Title = "EA Sports FC 24"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "Доминирайте на баскетболното игрище и изживейте историята на Коби Брайънт.",
+                            GenreId = 8,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202306/2219/336341776ce321f8a85e6837947702f7.png",
+                            Price = 49.99m,
+                            Title = "NBA 2K24"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "Огромен отворен свят в Мексико, стотици коли и невероятни състезания.",
+                            GenreId = 7,
+                            ImageUrl = "https://gaming-cdn.com/images/products/8701/orig/forza-horizon-5-pc-xbox-one-xbox-series-x-s-game-microsoft-store-cover.jpg",
+                            Price = 59.99m,
+                            Title = "Forza Horizon 5"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "Улични състезания с уникален визуален стил и преследвания с полицията.",
+                            GenreId = 7,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202209/2717/Z96m7Xz9Bv8pW25v15B1Y.png",
+                            Price = 24.99m,
+                            Title = "Need for Speed Unbound"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "Изградете империя, която да издържи изпитанието на времето.",
+                            GenreId = 5,
+                            ImageUrl = "https://cdn1.epicgames.com/b9340e45700d43fb8e0840134e1c6674/offer/EGS_SidMeiersCivilizationVI_FiraxisGames_S2-1200x1600-2f34731448b30f8c8574188506148679.jpg",
+                            Price = 19.99m,
+                            Title = "Civilization VI"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "Създавайте уникални персонажи и контролирайте техния живот.",
+                            GenreId = 6,
+                            ImageUrl = "https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_TheSims4_ElectronicArts_S2_1200x1600-336341776ce321f8a85e6837947702f7",
+                            Price = 0.00m,
+                            Title = "The Sims 4"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Description = "Полетете над целия свят с невероятна прецизност и реализъм.",
+                            GenreId = 6,
+                            ImageUrl = "https://gaming-cdn.com/images/products/7285/orig/microsoft-flight-simulator-pc-game-xbox-play-anywhere-cover.jpg",
+                            Price = 69.99m,
+                            Title = "Flight Simulator"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Description = "Леон Кенеди се впуска в зловеща мисия в Испания.",
+                            GenreId = 4,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202210/0712/V0T9zUzA99Ej848W.png",
+                            Price = 59.99m,
+                            Title = "Resident Evil 4"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Description = "Айзък Кларк се бори за оцеляване срещу некроморфи.",
+                            GenreId = 4,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202209/2717/it0mYv9pS9.png",
+                            Price = 34.99m,
+                            Title = "Dead Space"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Description = "Стройте, копайте и оцелявайте в безкраен свят от блокове.",
+                            GenreId = 10,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/img/cfn/11307u649X1pU.png",
+                            Price = 24.99m,
+                            Title = "Minecraft"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Description = "Присъединете се към Марио в мащабно 3D приключение из целия свят.",
+                            GenreId = 10,
+                            ImageUrl = "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000000141/desc/c6585140d348e3a47941ca6c243da6a7",
+                            Price = 49.99m,
+                            Title = "Super Mario Odyssey"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Description = "Уникално кооперативно приключение за двама играчи.",
+                            GenreId = 10,
+                            ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202012/0814/9yX9Z9m7Xz9Bv8pW25v15B1Y.png",
+                            Price = 15.99m,
+                            Title = "It Takes Two"
+                        });
                 });
 
             modelBuilder.Entity("GamePortals.Models.GameUser", b =>
@@ -86,6 +313,58 @@ namespace GamePortals.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Екшън"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "RPG"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Приключенски"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Хорор"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Стратегия"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Симулатор"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Състезателни"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Спортни"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Шутър"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Платформър"
+                        });
                 });
 
             modelBuilder.Entity("GamePortals.Models.Review", b =>

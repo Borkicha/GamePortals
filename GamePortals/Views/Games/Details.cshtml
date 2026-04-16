@@ -2,13 +2,18 @@
 
 @{
     ViewData["Title"] = Model.Title;
+
+    double avgValue = 0;
+    bool hasRating = double.TryParse(ViewBag.AverageRating?.ToString(), out avgValue);
+    var reviewsList = Model.Reviews?.ToList() ?? new List<GamePortals.Models.Review>();
+    int reviewsCount = reviewsList.Count;
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<h1 class="mb-4 text-uppercase fw-bold"><i class="bi bi-controller text-primary"></i> @Model.Title</h1>
+<h1 class="mb-4 text-uppercase fw-bold text-primary"><i class="bi bi-controller"></i> @Model.Title</h1>
 
-<div class="row shadow-lg p-4 bg-white rounded border mx-0">
+<div class="row shadow-lg p-4 bg-body-tertiary rounded border mx-0">
     <div class="col-md-4 text-center">
         @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
@@ -18,7 +23,7 @@
         {
             <div class="bg-dark text-white text-center border rounded d-flex align-items-center justify-content-center shadow-sm" style="height: 350px;">
                 <div class="p-3">
-                    <i class="bi bi-image-fill fs-1 d-block mb-2"></i>
+                    <i class="bi bi-image-fill fs-1 d-block mb-2 text-muted"></i>
                     <span class="text-uppercase small fw-bold">Липсва обложка</span>
                 </div>
             </div>
@@ -31,42 +36,83 @@
 
         <div class="game-stats fs-5">
             <div class="row mb-3">
-                <div class="col-sm-4 fw-bold text-secondary text-uppercase" style="font-size: 0.9rem;">Игра:</div>
+                <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Игра:</div>
                 <div class="col-sm-8 fw-bold">@Model.Title</div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-sm-4 fw-bold text-secondary text-uppercase" style="font-size: 0.9rem;">Описание:</div>
-                <div class="col-sm-8 text-dark" style="line-height: 1.6;">@Model.Description</div>
+                <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Описание:</div>
+                <div class="col-sm-8" style="line-height: 1.6; font-size: 1.1rem;">@Model.Description</div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-sm-4 fw-bold text-secondary text-uppercase" style="font-size: 0.9rem;">Категория:</div>
+                <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Категория:</div>
                 <div class="col-sm-8">
                     <span class="badge bg-primary px-3 py-2">@(Model.Genre?.Name ?? "General")</span>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <div class="col-sm-4 fw-bold text-secondary text-uppercase" style="font-size: 0.9rem;">Цена:</div>
-                <div class="col-sm-8 fw-bold text-success font-monospace">@Model.Price €</div>
+                <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Цена:</div>
+                <div class="col-sm-8 fw-bold text-success font-monospace fs-4">@Model.Price.ToString("N2") €</div>
             </div>
 
-            <div class="row mb-3 align-items-center">
-                <div class="col-sm-4 fw-bold text-secondary text-uppercase" style="font-size: 0.9rem;">Рейтинг на играчите:</div>
+            <div class="row mb-3 align-items-start">
+                <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Рейтинг:</div>
                 <div class="col-sm-8">
-                    @if (ViewBag.AverageRating != "Няма оценки")
-                    {
-                        <div class="d-flex align-items-center">
-                            <span class="text-warning fw-bold fs-4 me-2">
-                                <i class="bi bi-star-fill"></i> @ViewBag.AverageRating
-                            </span>
-                            <span class="text-muted small">/ 5.0 (@(Model.Reviews?.Count() ?? 0) гласа)</span>
+                    <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
+                        <div class="text-warning fs-4 rating-stars">
+                            @if (hasRating && avgValue > 0)
+                            {
+                                int fullStars = (int)Math.Floor(avgValue);
+                                bool hasHalfStar = (avgValue - fullStars) >= 0.5;
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= fullStars)
+                                    {
+                                        <i class="bi bi-star-fill"></i>
+                                    }
+                                    else if (i == fullStars + 1 && hasHalfStar)
+                                    {
+                                        <i class="bi bi-star-half"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-star text-muted opacity-25"></i>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    <i class="bi bi-star text-muted opacity-25"></i>
+                                }
+                            }
                         </div>
-                    }
-                    else
+                        @if (hasRating && avgValue > 0)
+                        {
+                            <span class="badge bg-primary fs-6 shadow-sm">@avgValue.ToString("F1") / 5.0</span>
+                            <span class="text-muted small ms-1">(@reviewsCount гласа)</span>
+                        }
+                    </div>
+
+                    @if (reviewsCount > 0)
                     {
-                        <span class="text-muted fst-italic">Все още никой не е дал оценка</span>
+                        <div class="p-3 rounded border bg-body rating-distribution-box" style="max-width: 350px;">
+                            @for (int i = 5; i >= 1; i--)
+                            {
+                                var countPerStar = reviewsList.Count(r => r.Rating == i);
+                                var percent = (countPerStar * 100) / reviewsCount;
+                                <div class="d-flex align-items-center mb-1" style="height: 18px;">
+                                    <span class="small text-muted" style="width: 50px;">@i <i class="bi bi-star-fill small"></i></span>
+                                    <div class="progress flex-grow-1 mx-2" style="height: 6px; background-color: rgba(128,128,128,0.2);">
+                                        <div class="progress-bar bg-warning rounded-pill" role="progressbar" style="width: @percent%"></div>
+                                    </div>
+                                    <span class="small text-muted fw-bold" style="width: 25px; text-align: right;">@countPerStar</span>
+                                </div>
+                            }
+                        </div>
                     }
                 </div>
             </div>
@@ -79,12 +125,12 @@
 
             @if (User.IsInRole("Admin"))
             {
-                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning btn-lg px-4 shadow-sm">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning btn-lg px-4 shadow-sm text-dark">
                     <i class="bi bi-gear-fill"></i> Редактирай
                 </a>
             }
 
-            <a asp-action="Index" class="btn btn-outline-dark btn-lg px-4 shadow-sm">
+            <a asp-action="Index" class="btn btn-primary btn-lg px-4 shadow-sm">
                 <i class="bi bi-list-ul"></i> Към каталога
             </a>
         </div>
@@ -96,18 +142,18 @@
 <div class="reviews-section pb-5">
     <div class="d-flex align-items-center mb-4">
         <h3 class="text-uppercase fw-bold mb-0 me-3"><i class="bi bi-chat-left-dots-fill text-primary"></i> Мнения на играчите</h3>
-        <span class="badge bg-secondary">@(Model.Reviews?.Count() ?? 0)</span>
+        <span class="badge bg-secondary px-3">@reviewsCount</span>
     </div>
 
-    @if (Model.Reviews != null && Model.Reviews.Any())
+    @if (reviewsCount > 0)
     {
-        @foreach (var review in Model.Reviews)
+        @foreach (var review in reviewsList)
         {
-            <div class="card mb-4 shadow-sm border-0 bg-light overflow-hidden">
+            <div class="card mb-4 shadow-sm border-0 bg-body-tertiary overflow-hidden">
                 <div class="card-body p-0">
                     <div class="d-flex flex-column flex-md-row">
-                        <div class="p-3 bg-dark text-white text-center d-flex flex-column justify-content-center align-items-center" style="min-width: 150px;">
-                            <i class="bi bi-person-circle fs-2"></i>
+                        <div class="p-3 bg-dark text-white text-center d-flex flex-column justify-content-center align-items-center" style="min-width: 160px;">
+                            <i class="bi bi-person-circle fs-2 text-info"></i>
                             <span class="fw-bold mt-1">@(review.User?.UserName?.Split('@')[0] ?? "Gamer")</span>
 
                             @if (review.User?.Email == "Borkicha@admin.com")
@@ -118,14 +164,14 @@
                             }
                             else
                             {
-                                <span class="badge bg-primary mt-2 text-uppercase" style="font-size: 0.65rem; letter-spacing: 1px;">
+                                <span class="badge bg-info text-dark mt-2 text-uppercase" style="font-size: 0.65rem; letter-spacing: 1px;">
                                     <i class="bi bi-controller"></i> Играч
                                 </span>
                             }
                         </div>
 
-                        <div class="p-4 bg-white w-100 border-start">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="p-4 bg-body w-100 border-start border-secondary-subtle">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div class="text-warning fs-5">
                                     @for (int i = 1; i <= 5; i++)
                                     {
@@ -133,7 +179,7 @@
                                     }
                                 </div>
                             </div>
-                            <p class="card-text text-dark fst-italic" style="font-size: 1.1rem; line-height: 1.6;">
+                            <p class="card-text fst-italic fs-5" style="line-height: 1.6;">
                                 "@review.Content"
                             </p>
                         </div>
@@ -144,10 +190,34 @@
     }
     else
     {
-        <div class="alert alert-secondary border-0 shadow-sm text-center py-5">
-            <i class="bi bi-chat-dots fs-1 d-block mb-3 opacity-50"></i>
+        <div class="alert alert-secondary border-0 shadow-sm text-center py-5 bg-body-tertiary">
+            <i class="bi bi-chat-dots fs-1 d-block mb-3 opacity-25"></i>
             <p class="mb-0 fs-5">Все още няма коментари за тази игра.</p>
             <p class="text-muted">Бъди първият, който ще сподели мнение!</p>
         </div>
     }
 </div>
+
+<style>
+    .rating-stars i {
+        filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.4));
+        transition: transform 0.2s ease;
+        display: inline-block;
+    }
+
+    .rating-distribution-box {
+        border: 1px solid rgba(128,128,128,0.2) !important;
+    }
+
+    .progress-bar {
+        background: linear-gradient(90deg, #ffc107, #ff9800);
+    }
+
+    .card {
+        transition: transform 0.2s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+</style>

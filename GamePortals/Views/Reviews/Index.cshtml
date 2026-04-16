@@ -8,23 +8,9 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="text-primary"><i class="bi bi-journal-text"></i> @ViewData["HeaderTitle"]</h1>
 
-        <div class="btn-group shadow-sm">
-            @if (User.IsInRole("Admin"))
-            {
-                <a asp-action="Index" asp-route-sortOrder="game" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-sort-alpha-down"></i> Сортирай по Игра
-                </a>
-            }
-            else
-            {
-                <a asp-action="Index" asp-route-sortOrder="rating" class="btn btn-outline-warning btn-sm">
-                    <i class="bi bi-star-half"></i> Сортирай по Рейтинг
-                </a>
-            }
-            <a asp-action="Index" class="btn btn-outline-secondary btn-sm" title="Нулирай">
-                <i class="bi bi-arrow-clockwise"></i>
-            </a>
-        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm shadow-sm" title="Нулирай">
+            <i class="bi bi-arrow-clockwise"></i> Опресни
+        </a>
     </div>
 
     <div class="table-responsive shadow-sm rounded border bg-white">
@@ -33,21 +19,25 @@
                 <tr>
                     @if (User.IsInRole("Admin"))
                     {
-                        <th>Автор</th>
+                        <th style="cursor: pointer;" onclick="sortTable(0, this, 'text')">
+                            Автор <i class="bi bi-arrow-down-up ms-1 small opacity-50"></i>
+                        </th>
                     }
                     <th>Игра</th>
-                    <th style="min-width: 120px;">Оценка</th>
+                    <th style="min-width: 150px; cursor: pointer;" onclick="sortTable(@(User.IsInRole("Admin") ? 2 : 1), this, 'number')">
+                        Оценка <i class="bi bi-arrow-down-up ms-1 small opacity-50"></i>
+                    </th>
                     <th>Коментар</th>
                     <th class="text-end pe-3">Действия</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="reviewsTable">
                 @foreach (var item in Model)
                 {
                     <tr>
                         @if (User.IsInRole("Admin"))
                         {
-                            <td>
+                            <td data-author="@(item.User?.UserName ?? "Потребител")">
                                 <span class="fw-bold text-dark">
                                     <i class="bi bi-person-circle text-primary"></i>
                                     @(item.User?.UserName?.Split('@')[0] ?? "Потребител")
@@ -72,13 +62,14 @@
                                 @(item.Game?.Title ?? "Няма информация")
                             </a>
                         </td>
-                        <td>
+                        <td data-rating="@item.Rating">
                             <span class="text-warning">
                                 @for (int i = 1; i <= 5; i++)
                                 {
                                     <i class="bi bi-star@(i <= item.Rating ? "-fill" : "")"></i>
                                 }
                             </span>
+                            <span class="ms-1 small text-muted">(@item.Rating)</span>
                         </td>
                         <td class="text-muted small">@item.Content</td>
                         <td class="text-end pe-3">
@@ -97,3 +88,40 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        let sortDirections = {};
+
+        function sortTable(colIndex, headerElement, type) {
+            const tableBody = document.getElementById("reviewsTable");
+            const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+            sortDirections[colIndex] = !sortDirections[colIndex];
+            const isAsc = sortDirections[colIndex];
+
+            document.querySelectorAll('th i').forEach(i => i.className = 'bi bi-arrow-down-up ms-1 small opacity-50');
+            const icon = headerElement.querySelector('i');
+            icon.className = isAsc ?
+                (type === 'number' ? 'bi bi-sort-numeric-down ms-1 text-primary' : 'bi bi-sort-alpha-down ms-1 text-primary') :
+                (type === 'number' ? 'bi bi-sort-numeric-up-alt ms-1 text-primary' : 'bi bi-sort-alpha-up-alt ms-1 text-primary');
+            icon.classList.remove('opacity-50');
+
+            const sortedRows = rows.sort((a, b) => {
+                let valA, valB;
+
+                if (type === 'number') {
+                    valA = parseFloat(a.cells[colIndex].getAttribute('data-rating'));
+                    valB = parseFloat(b.cells[colIndex].getAttribute('data-rating'));
+                    return isAsc ? valA - valB : valB - valA;
+                } else {
+                    valA = a.cells[colIndex].innerText.trim().toLowerCase();
+                    valB = b.cells[colIndex].innerText.trim().toLowerCase();
+                    return isAsc ? valA.localeCompare(valB, 'bg') : valB.localeCompare(valA, 'bg');
+                }
+            });
+
+            sortedRows.forEach(row => tableBody.appendChild(row));
+        }
+    </script>
+}

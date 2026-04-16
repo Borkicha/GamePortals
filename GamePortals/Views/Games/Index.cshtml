@@ -22,21 +22,17 @@
         <div class="col-md-6 col-lg-5">
             <form asp-action="Index" method="get" class="d-flex shadow-sm rounded">
                 <input type="hidden" name="categoryId" value="@ViewData["CurrentCategoryId"]" />
-
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0">
                         <i class="bi bi-search text-primary"></i>
                     </span>
-                    @* Добавено id="liveSearch" за JavaScript-а *@
                     <input type="text" id="liveSearch" name="searchString" class="form-control border-start-0 ps-0"
                            placeholder="Започни да пишеш заглавие..."
                            value="@ViewData["CurrentFilter"]" autocomplete="off" />
-
                     <button type="submit" class="btn btn-primary px-4">Търси</button>
-
                     @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"]?.ToString()))
                     {
-                        <a asp-action="Index" asp-route-categoryId="@ViewData["CurrentCategoryId"]" class="btn btn-outline-danger" title="Изчисти търсенето">
+                        <a asp-action="Index" asp-route-categoryId="@ViewData["CurrentCategoryId"]" class="btn btn-outline-danger">
                             <i class="bi bi-x-lg"></i>
                         </a>
                     }
@@ -50,17 +46,22 @@
             <thead class="table-dark">
                 <tr>
                     <th class="ps-4">Обложка</th>
-                    <th>Заглавие</th>
+                    <th style="cursor: pointer;" onclick="sortTable(1, this)">
+                        Заглавие <i class="bi bi-arrow-down-up ms-1 small opacity-50"></i>
+                    </th>
                     <th>Описание</th>
-                    <th>Категория</th>
-                    <th>Цена</th>
+                    <th style="cursor: pointer;" onclick="sortTable(3, this)">
+                        Категория <i class="bi bi-arrow-down-up ms-1 small opacity-50"></i>
+                    </th>
+                    <th style="cursor: pointer;" onclick="sortTable(4, this)">
+                        Цена <i class="bi bi-arrow-down-up ms-1 small opacity-50"></i>
+                    </th>
                     @if (User.IsInRole("Admin"))
                     {
                         <th class="text-end pe-4">Действия</th>
                     }
                 </tr>
             </thead>
-            @* Добавено id="gamesTable" за JavaScript-а *@
             <tbody id="gamesTable">
                 @foreach (var item in Model)
                 {
@@ -83,32 +84,20 @@
                             </a>
                         </td>
                         <td class="text-muted small" style="max-width: 300px;">
-                            @if (item.Description?.Length > 100)
-                            {
-                                @(item.Description.Substring(0, 100) + "...")
-                            }
-                            else
-                            {
-                                @item.Description
-                            }
+                            @(item.Description?.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)
                         </td>
                         <td>
                             <span class="badge bg-info text-dark">@(item.Genre?.Name ?? "Няма")</span>
                         </td>
-                        <td>
+                        <td data-price="@item.Price.ToString("F2").Replace(',', '.')">
                             <span class="text-success fw-bold">@item.Price.ToString("N2") €</span>
                         </td>
-
                         @if (User.IsInRole("Admin"))
                         {
                             <td class="text-end pe-4">
                                 <div class="btn-group btn-group-sm position-relative" style="z-index: 5;">
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning" title="Редактирай">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Изтрий">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
                                 </div>
                             </td>
                         }
@@ -120,7 +109,7 @@
 
     <div id="noResults" class="alert alert-light border text-center shadow-sm mt-4" style="display: none;">
         <i class="bi bi-exclamation-circle me-2"></i>
-        <span>Няма намерени игри, съвпадащи с вашето търсене.</span>
+        <span>Няма намерени игри.</span>
     </div>
 </div>
 
@@ -153,10 +142,8 @@
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll('#gamesTable tr');
             let hasVisibleRows = false;
-
             rows.forEach(row => {
                 let title = row.querySelector('.game-title').innerText.toLowerCase();
-
                 if (title.includes(filter)) {
                     row.style.display = "";
                     hasVisibleRows = true;
@@ -164,10 +151,41 @@
                     row.style.display = "none";
                 }
             });
-
-
-            let noResults = document.getElementById('noResults');
-            noResults.style.display = hasVisibleRows ? "none" : "block";
+            document.getElementById('noResults').style.display = hasVisibleRows ? "none" : "block";
         });
+
+        let currentSortCol = -1;
+        let isAsc = true;
+
+        function sortTable(colIndex, headerElement) {
+            const tableBody = document.getElementById("gamesTable");
+            const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+            if (currentSortCol === colIndex) {
+                isAsc = !isAsc;
+            } else {
+                isAsc = true;
+                currentSortCol = colIndex;
+            }
+
+            document.querySelectorAll('th i').forEach(i => i.className = 'bi bi-arrow-down-up ms-1 small opacity-50');
+            const icon = headerElement.querySelector('i');
+            icon.className = isAsc ? 'bi bi-sort-alpha-down ms-1 text-primary' : 'bi bi-sort-alpha-up-alt ms-1 text-primary';
+            icon.classList.remove('opacity-50');
+
+            const sortedRows = rows.sort((a, b) => {
+                let valA, valB;
+                if (colIndex === 4) {
+                    valA = parseFloat(a.cells[colIndex].getAttribute('data-price'));
+                    valB = parseFloat(b.cells[colIndex].getAttribute('data-price'));
+                    return isAsc ? valA - valB : valB - valA;
+                } else {
+                    valA = a.cells[colIndex].innerText.trim().toLowerCase();
+                    valB = b.cells[colIndex].innerText.trim().toLowerCase();
+                    return isAsc ? valA.localeCompare(valB, 'bg') : valB.localeCompare(valA, 'bg');
+                }
+            });
+            sortedRows.forEach(row => tableBody.appendChild(row));
+        }
     </script>
 }
