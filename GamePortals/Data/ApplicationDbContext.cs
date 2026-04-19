@@ -15,7 +15,11 @@ public class ApplicationDbContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-r
+
+
+        string borkoId = "c40bf468-5336-4f66-afc7-33e3ef06df38";
+        string vladoId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7";
+
         builder.Entity<GameUser>().HasKey(gu => new { gu.UserId, gu.GameId });
 
         builder.Entity<Genre>().HasData(
@@ -30,6 +34,7 @@ r
             new Genre { Id = 9, Name = "Шутър" },
             new Genre { Id = 10, Name = "Платформър" }
         );
+
 
         builder.Entity<Game>().HasData(
             new Game { Id = 1, Title = "Elden Ring", Price = 59.99m, GenreId = 2, Description = "Впуснете се в епично приключение из Междуземията, за да разкриете тайните на Елденския пръстен.", ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/aajm8s7kr9ovSbaS7vS88Lp5.png" },
@@ -57,6 +62,59 @@ r
             new Game { Id = 23, Title = "Minecraft", Price = 24.99m, GenreId = 10, Description = "Стройте, копайте и оцелявайте в безкраен свят от блокове.", ImageUrl = "https://image.api.playstation.com/vulcan/img/cfn/11307u649X1pU.png" },
             new Game { Id = 24, Title = "Super Mario Odyssey", Price = 49.99m, GenreId = 10, Description = "Присъединете се към Марио в мащабно 3D приключение из целия свят.", ImageUrl = "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000000141/desc/c6585140d348e3a47941ca6c243da6a7" },
             new Game { Id = 25, Title = "It Takes Two", Price = 15.99m, GenreId = 10, Description = "Уникално кооперативно приключение за двама играчи.", ImageUrl = "https://image.api.playstation.com/vulcan/ap/rnd/202012/0814/9yX9Z9m7Xz9Bv8pW25v15B1Y.png" }
+        );
+
+        builder.Entity<Review>().HasData(
+            new Review { Id = 1, GameId = 1, UserId = borkoId, Rating = 5, Content = "Най-добрата игра на FromSoftware. Предизвикателна и красива!" },
+            new Review { Id = 2, GameId = 1, UserId = vladoId, Rating = 4, Content = "Трудна ми е, но светът е невероятен за изследване." },
+            new Review { Id = 3, GameId = 2, UserId = borkoId, Rating = 5, Content = "Гералт е легенда. Историята е ненадмината." },
+            new Review { Id = 4, GameId = 2, UserId = vladoId, Rating = 5, Content = "Любимото ми RPG. Вече я превъртам за трети път." },
+            new Review { Id = 5, GameId = 3, UserId = borkoId, Rating = 5, Content = "Артур Морган е най-великият персонаж. Графиката е топ." },
+            new Review { Id = 6, GameId = 3, UserId = vladoId, Rating = 4, Content = "Малко е бавна, но реализмът е на друго ниво." },
+            new Review { Id = 7, GameId = 4, UserId = borkoId, Rating = 5, Content = "Кратос и Атреус са невероятен екип. Бойната система е брутална." },
+            new Review { Id = 8, GameId = 4, UserId = vladoId, Rating = 5, Content = "Епичен завършек на скандинавската сага!" },
+            new Review { Id = 9, GameId = 5, UserId = borkoId, Rating = 5, Content = "Най-красивата игра за самураи. Пътят на призрака е велик." },
+            new Review { Id = 10, GameId = 5, UserId = vladoId, Rating = 4, Content = "Страхотна атмосфера и много добър арт стил." },
+            new Review { Id = 11, GameId = 6, UserId = borkoId, Rating = 4, Content = "След ъпдейтите играта стана това, което обещаваха." },
+            new Review { Id = 12, GameId = 6, UserId = vladoId, Rating = 5, Content = "Найт Сити ме погълна. Невероятна киберпънк атмосфера." },
+            new Review { Id = 13, GameId = 7, UserId = borkoId, Rating = 4, Content = "Огромна игра. Космосът е интересен, макар и малко празен." },
+            new Review { Id = 14, GameId = 7, UserId = vladoId, Rating = 3, Content = "Типична игра на Bethesda. Има своите минуси." },
+            new Review { Id = 15, GameId = 8, UserId = borkoId, Rating = 5, Content = "Сбъдната мечта за всеки фен на Хари Потър." },
+            new Review { Id = 16, GameId = 8, UserId = vladoId, Rating = 4, Content = "Хогуортс е направен перфектно. Магията е навсякъде." },
+            new Review { Id = 17, GameId = 9, UserId = borkoId, Rating = 5, Content = "Шедьовър. Свободата на избор тук е нереална." },
+            new Review { Id = 18, GameId = 9, UserId = vladoId, Rating = 5, Content = "Най-доброто D&D преживяване пред екрана." },
+            new Review { Id = 19, GameId = 10, UserId = borkoId, Rating = 4, Content = "Машините са още по-големи и опасни. Алой е супер." },
+            new Review { Id = 20, GameId = 10, UserId = vladoId, Rating = 5, Content = "Графично това е най-доброто на пазара в момента." },
+            new Review { Id = 21, GameId = 11, UserId = borkoId, Rating = 3, Content = "Мултиплейърът е същият, кампанията е кратка." },
+            new Review { Id = 22, GameId = 11, UserId = vladoId, Rating = 4, Content = "Става за постреляне вечер с приятели." },
+            new Review { Id = 23, GameId = 12, UserId = borkoId, Rating = 2, Content = "Пълно разочарование. Къде са класовете?" },
+            new Review { Id = 24, GameId = 12, UserId = vladoId, Rating = 3, Content = "Има проблясъци, но Battlefield 4 беше по-добра." },
+            new Review { Id = 25, GameId = 13, UserId = borkoId, Rating = 5, Content = "Rip and Tear! Най-бързият и добър шутър." },
+            new Review { Id = 26, GameId = 13, UserId = vladoId, Rating = 4, Content = "Доста е напрегната, но музиката те държи в ритъм." },
+            new Review { Id = 27, GameId = 14, UserId = borkoId, Rating = 3, Content = "Ново име, същата игра. Микротранзакциите дразнят." },
+            new Review { Id = 28, GameId = 14, UserId = vladoId, Rating = 4, Content = "За футболни фенове е задължителна всяка година." },
+            new Review { Id = 29, GameId = 15, UserId = borkoId, Rating = 4, Content = "Геймплеят е добър, но MyCareer е доста скъп режим." },
+            new Review { Id = 30, GameId = 15, UserId = vladoId, Rating = 3, Content = "Анимациите са супер, но всичко е за пари." },
+            new Review { Id = 31, GameId = 16, UserId = borkoId, Rating = 5, Content = "Най-добрата рейсинг игра с отворен свят." },
+            new Review { Id = 32, GameId = 16, UserId = vladoId, Rating = 5, Content = "Мексико е красиво, а колите са стотици." },
+            new Review { Id = 33, GameId = 17, UserId = borkoId, Rating = 4, Content = "Арт стилът е свеж. Гонките с полицията са на ниво." },
+            new Review { Id = 34, GameId = 17, UserId = vladoId, Rating = 3, Content = "Добър опит за промяна, но историята е слаба." },
+            new Review { Id = 35, GameId = 18, UserId = borkoId, Rating = 5, Content = "Още само един ход... и стана 4 сутринта." },
+            new Review { Id = 36, GameId = 18, UserId = vladoId, Rating = 5, Content = "Най-добрата стратегия. Можеш да я играеш вечно." },
+            new Review { Id = 37, GameId = 19, UserId = borkoId, Rating = 3, Content = "Става за убиване на време, но трябват много DLC-та." },
+            new Review { Id = 38, GameId = 19, UserId = vladoId, Rating = 5, Content = "Обожавам да строя къщи и да развивам семейства." },
+            new Review { Id = 39, GameId = 20, UserId = borkoId, Rating = 5, Content = "Технологично чудо. Да летиш над града си е уникално." },
+            new Review { Id = 40, GameId = 20, UserId = vladoId, Rating = 4, Content = "Изисква сериозна машина, но изглежда реално." },
+            new Review { Id = 41, GameId = 21, UserId = borkoId, Rating = 5, Content = "Перфектен римейк. Леон е по-голям пич от всякога." },
+            new Review { Id = 42, GameId = 21, UserId = vladoId, Rating = 5, Content = "Класически хорър, направен по модерен начин." },
+            new Review { Id = 43, GameId = 22, UserId = borkoId, Rating = 5, Content = "Звуковият дизайн ще ви побърка. Много страшно!" },
+            new Review { Id = 44, GameId = 22, UserId = vladoId, Rating = 4, Content = "Космосът никога не е бил толкова зловещ." },
+            new Review { Id = 45, GameId = 23, UserId = borkoId, Rating = 4, Content = "Класика за креативност. Безкрайни възможности." },
+            new Review { Id = 46, GameId = 23, UserId = vladoId, Rating = 5, Content = "Играта, която никога не омръзва. Лего на стероиди." },
+            new Review { Id = 47, GameId = 24, UserId = borkoId, Rating = 5, Content = "Чисто забавление. Дизайнът на нивата е гениален." },
+            new Review { Id = 48, GameId = 24, UserId = vladoId, Rating = 5, Content = "Най-добрата Марио игра досега." },
+            new Review { Id = 49, GameId = 25, UserId = borkoId, Rating = 5, Content = "Най-доброто ко-оп изживяване. Задължително се играе с двама." },
+            new Review { Id = 50, GameId = 25, UserId = vladoId, Rating = 5, Content = "Механиките се сменят постоянно. Невероятна история." }
         );
     }
 }

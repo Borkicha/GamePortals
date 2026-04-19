@@ -34,7 +34,7 @@
         <h4 class="text-primary text-uppercase fw-bold"><i class="bi bi-info-square-fill"></i> Инфо за играта</h4>
         <hr />
 
-        <div class="game-stats fs-5">
+        <div class="game-stats fs-5 text-body">
             <div class="row mb-3">
                 <div class="col-sm-4 fw-bold text-secondary text-uppercase small" style="letter-spacing: 1px;">Игра:</div>
                 <div class="col-sm-8 fw-bold">@Model.Title</div>
@@ -99,11 +99,11 @@
 
                     @if (reviewsCount > 0)
                     {
-                        <div class="p-3 rounded border bg-body rating-distribution-box" style="max-width: 350px;">
+                        <div class="p-3 rounded border bg-body text-body rating-distribution-box" style="max-width: 350px;">
                             @for (int i = 5; i >= 1; i--)
                             {
                                 var countPerStar = reviewsList.Count(r => r.Rating == i);
-                                var percent = (countPerStar * 100) / reviewsCount;
+                                var percent = reviewsCount > 0 ? (countPerStar * 100) / reviewsCount : 0;
                                 <div class="d-flex align-items-center mb-1" style="height: 18px;">
                                     <span class="small text-muted" style="width: 50px;">@i <i class="bi bi-star-fill small"></i></span>
                                     <div class="progress flex-grow-1 mx-2" style="height: 6px; background-color: rgba(128,128,128,0.2);">
@@ -141,7 +141,7 @@
 
 <div class="reviews-section pb-5">
     <div class="d-flex align-items-center mb-4">
-        <h3 class="text-uppercase fw-bold mb-0 me-3"><i class="bi bi-chat-left-dots-fill text-primary"></i> Мнения на играчите</h3>
+        <h3 class="text-uppercase fw-bold mb-0 me-3 text-body"><i class="bi bi-chat-left-dots-fill text-primary"></i> Мнения на играчите</h3>
         <span class="badge bg-secondary px-3">@reviewsCount</span>
     </div>
 
@@ -152,6 +152,7 @@
             <div class="card mb-4 shadow-sm border-0 bg-body-tertiary overflow-hidden">
                 <div class="card-body p-0">
                     <div class="d-flex flex-column flex-md-row">
+
                         <div class="p-3 bg-dark text-white text-center d-flex flex-column justify-content-center align-items-center" style="min-width: 160px;">
                             <i class="bi bi-person-circle fs-2 text-info"></i>
                             <span class="fw-bold mt-1">@(review.User?.UserName?.Split('@')[0] ?? "Gamer")</span>
@@ -170,7 +171,8 @@
                             }
                         </div>
 
-                        <div class="p-4 bg-body w-100 border-start border-secondary-subtle">
+
+                        <div class="p-4 bg-body text-body w-100 border-start border-secondary-subtle">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div class="text-warning fs-5">
                                     @for (int i = 1; i <= 5; i++)
@@ -179,7 +181,7 @@
                                     }
                                 </div>
                             </div>
-                            <p class="card-text fst-italic fs-5" style="line-height: 1.6;">
+                            <p class="card-text fst-italic fs-5 text-body" style="line-height: 1.6;">
                                 "@review.Content"
                             </p>
                         </div>
@@ -190,7 +192,7 @@
     }
     else
     {
-        <div class="alert alert-secondary border-0 shadow-sm text-center py-5 bg-body-tertiary">
+        <div class="alert alert-secondary border-0 shadow-sm text-center py-5 bg-body-tertiary text-body">
             <i class="bi bi-chat-dots fs-1 d-block mb-3 opacity-25"></i>
             <p class="mb-0 fs-5">Все още няма коментари за тази игра.</p>
             <p class="text-muted">Бъди първият, който ще сподели мнение!</p>
@@ -220,4 +222,9 @@
         .card:hover {
             transform: translateY(-3px);
         }
+
+
+    .text-body {
+        color: var(--bs-body-color) !important;
+    }
 </style>

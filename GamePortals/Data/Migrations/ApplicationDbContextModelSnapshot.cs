@@ -395,6 +395,408 @@ namespace GamePortals.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Най-добрата игра на FromSoftware. Предизвикателна и красива!",
+                            GameId = 1,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Трудна ми е, но светът е невероятен за изследване.",
+                            GameId = 1,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Content = "Гералт е легенда. Историята е ненадмината.",
+                            GameId = 2,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Content = "Любимото ми RPG. Вече я превъртам за трети път.",
+                            GameId = 2,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Content = "Артур Морган е най-великият персонаж. Графиката е топ.",
+                            GameId = 3,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Content = "Малко е бавна, но реализмът е на друго ниво.",
+                            GameId = 3,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Content = "Кратос и Атреус са невероятен екип. Бойната система е брутална.",
+                            GameId = 4,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Content = "Епичен завършек на скандинавската сага!",
+                            GameId = 4,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Content = "Най-красивата игра за самураи. Пътят на призрака е велик.",
+                            GameId = 5,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Content = "Страхотна атмосфера и много добър арт стил.",
+                            GameId = 5,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Content = "След ъпдейтите играта стана това, което обещаваха.",
+                            GameId = 6,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Content = "Найт Сити ме погълна. Невероятна киберпънк атмосфера.",
+                            GameId = 6,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Content = "Огромна игра. Космосът е интересен, макар и малко празен.",
+                            GameId = 7,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Content = "Типична игра на Bethesda. Има своите минуси.",
+                            GameId = 7,
+                            Rating = 3,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Content = "Сбъдната мечта за всеки фен на Хари Потър.",
+                            GameId = 8,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Content = "Хогуортс е направен перфектно. Магията е навсякъде.",
+                            GameId = 8,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Content = "Шедьовър. Свободата на избор тук е нереална.",
+                            GameId = 9,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Content = "Най-доброто D&D преживяване пред екрана.",
+                            GameId = 9,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Content = "Машините са още по-големи и опасни. Алой е супер.",
+                            GameId = 10,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Content = "Графично това е най-доброто на пазара в момента.",
+                            GameId = 10,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Content = "Мултиплейърът е същият, кампанията е кратка.",
+                            GameId = 11,
+                            Rating = 3,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Content = "Става за постреляне вечер с приятели.",
+                            GameId = 11,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Content = "Пълно разочарование. Къде са класовете?",
+                            GameId = 12,
+                            Rating = 2,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Content = "Има проблясъци, но Battlefield 4 беше по-добра.",
+                            GameId = 12,
+                            Rating = 3,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Content = "Rip and Tear! Най-бързият и добър шутър.",
+                            GameId = 13,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Content = "Доста е напрегната, но музиката те държи в ритъм.",
+                            GameId = 13,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Content = "Ново име, същата игра. Микротранзакциите дразнят.",
+                            GameId = 14,
+                            Rating = 3,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Content = "За футболни фенове е задължителна всяка година.",
+                            GameId = 14,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Content = "Геймплеят е добър, но MyCareer е доста скъп режим.",
+                            GameId = 15,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Content = "Анимациите са супер, но всичко е за пари.",
+                            GameId = 15,
+                            Rating = 3,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Content = "Най-добрата рейсинг игра с отворен свят.",
+                            GameId = 16,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Content = "Мексико е красиво, а колите са стотици.",
+                            GameId = 16,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Content = "Арт стилът е свеж. Гонките с полицията са на ниво.",
+                            GameId = 17,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Content = "Добър опит за промяна, но историята е слаба.",
+                            GameId = 17,
+                            Rating = 3,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Content = "Още само един ход... и стана 4 сутринта.",
+                            GameId = 18,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Content = "Най-добрата стратегия. Можеш да я играеш вечно.",
+                            GameId = 18,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Content = "Става за убиване на време, но трябват много DLC-та.",
+                            GameId = 19,
+                            Rating = 3,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Content = "Обожавам да строя къщи и да развивам семейства.",
+                            GameId = 19,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Content = "Технологично чудо. Да летиш над града си е уникално.",
+                            GameId = 20,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Content = "Изисква сериозна машина, но изглежда реално.",
+                            GameId = 20,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Content = "Перфектен римейк. Леон е по-голям пич от всякога.",
+                            GameId = 21,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Content = "Класически хорър, направен по модерен начин.",
+                            GameId = 21,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Content = "Звуковият дизайн ще ви побърка. Много страшно!",
+                            GameId = 22,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Content = "Космосът никога не е бил толкова зловещ.",
+                            GameId = 22,
+                            Rating = 4,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Content = "Класика за креативност. Безкрайни възможности.",
+                            GameId = 23,
+                            Rating = 4,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Content = "Играта, която никога не омръзва. Лего на стероиди.",
+                            GameId = 23,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Content = "Чисто забавление. Дизайнът на нивата е гениален.",
+                            GameId = 24,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Content = "Най-добрата Марио игра досега.",
+                            GameId = 24,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Content = "Най-доброто ко-оп изживяване. Задължително се играе с двама.",
+                            GameId = 25,
+                            Rating = 5,
+                            UserId = "c40bf468-5336-4f66-afc7-33e3ef06df38"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Content = "Механиките се сменят постоянно. Невероятна история.",
+                            GameId = 25,
+                            Rating = 5,
+                            UserId = "05ce0276-a737-4cfb-be2c-12f5f627c4e7"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
